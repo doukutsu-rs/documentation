@@ -13,7 +13,7 @@ As with most Mac programs, it is recommended that you store the application file
 
 * Right-click on the downloaded application (`dokutsu-rs.app`) and click `Show Package Contents`.
 * Inside the application, navigate to `Contents/Resources/` and place the Cave Story game data directory in the folder. The data directory is a folder named "**data**" in the original game files.
-* If you are using freeware data files downloaded from the tribute site, place the original `Doukutsu.exe` executable near the doukutsu-rs executable file in `Contents/MacOS/`. After the first run you will get a **«No stage table found»** or **«Texture "Loading" is missing»** error. Copy all files from the `Contents/MacOS/data/` folder to the `Contents/Resources/data/` folder and delete the `Contents/MacOS/data/`.
+* If you are using freeware data files downloaded from the tribute site, place the original `Doukutsu.exe` executable near the doukutsu-rs executable file in `Contents/MacOS/`. After the first run you will get a **«No stage table found»** or **«Texture "Loading" is missing»** error. Copy all files from the `Contents/MacOS/data/` folder to the `Contents/Resources/data/` folder and delete `Contents/MacOS/data/`.
 
 Note that due to the self-contained nature of Mac applications, this will have to be repeated if a newer version is downloaded.
 
