@@ -1,4 +1,3 @@
-
 # macOS
 
 {% include "../.gitbook/includes/if-you-dont-know-where-to-....md" %}
@@ -6,14 +5,15 @@
 ### 1. Download doukutsu-rs
 
 * Go to the doukutsu-rs downloads page: [**https://get.doukutsu.rs**](https://get.doukutsu.rs)
-* Choose either the **Apple Silicon (ARM64)** version or the **Intel (x86_64)** depending on [the type of your processor](https://support.apple.com/116943). All Macs made since 2024 have an Apple silicon processor.
+* Choose either the **Apple Silicon (ARM64)** version or the **Intel (x86\_64)** depending on [the type of your processor](https://support.apple.com/116943). All Macs made since 2024 have an Apple silicon processor.
 
 As with most Mac programs, it is recommended that you store the application file (`dokutsu-rs.app`) in either the global or user `Applications` directory on your computer.
 
 ### 2. Add game data
 
 * Right-click on the downloaded application (`dokutsu-rs.app`) and click `Show Package Contents`.
-* Inside the application, navigate to `Contents/Resources/` and place the Cave Story game data directory in the folder. The data directory is a folder named "**data**" in the original game files. 
+* Inside the application, navigate to `Contents/Resources/` and place the Cave Story game data directory in the folder. The data directory is a folder named "**data**" in the original game files.
+* If you are using freeware data files downloaded from the tribute site, place the original `Doukutsu.exe` executable near the doukutsu-rs executable file in `Contents/MacOS/`. After the first run you will get a **«No stage table found»** or **«Texture "Loading" is missing»** error. Copy all files from the `Contents/MacOS/data/` folder to the `Contents/Resources/data/` folder and delete the `Contents/MacOS/data/`.
 
 Note that due to the self-contained nature of Mac applications, this will have to be repeated if a newer version is downloaded.
 
