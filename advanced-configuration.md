@@ -28,7 +28,7 @@ This variable specifies the full path to the game data directory. By default, if
 
 **Possible values**: `1` (true) | `0` (false)
 
-Forces the engine to not use OpenGL. This is only supported if the engine is built with the SDL backend (feature `backend-sdl`). Since the engine doesn't support any other graphics APIs, this parameter has no effect.
+Forces the engine to not use default OpenGL render. This is only supported if the engine is built with the SDL backend (feature `backend-sdl`), for which SDL2 renderer is used, if this option is enabled.
 
 ## Command line arguments
 
