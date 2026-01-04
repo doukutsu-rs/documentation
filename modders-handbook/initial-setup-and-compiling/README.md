@@ -138,7 +138,7 @@ sudo apt install build-essential cmake git
 #### Arch-based distributions (Arch Linux, Manjaro, EndeavourOS, etc.)
 
 ```
-sudo pacman -Syu
+sudo pacman -Sy
 sudo pacman -S base-devel cmake git
 ```
 

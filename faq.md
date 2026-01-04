@@ -18,9 +18,9 @@ Please note that doukutsu-rs **is not a decompilation**, as it's written from sc
 
 Starting with version 0.99.0-beta1, released on January 16, 2022, **the game is fully playable**. Work is currently underway to further improve the engine and fix some discrepancies with the original game.
 
-While doukutsu-rs **tries to be faithful** in behaviour to the original game, it **doesn't aim to be an exact copy** of it. For example, doukutsu-rs lacks bugs that exist in the vanilla version of the game, so there are some differences in behaviour (e.g. [issue #278](https://github.com/doukutsu-rs/doukutsu-rs/issues/278#issuecomment-2403594236)), but also includes features such as cutscene skip, lighting effects, subpixel scrolling and V-Sync support.
+While doukutsu-rs **tries to be faithful** in behavior to the original game, it **doesn't aim to be an exact copy** of it. For example, doukutsu-rs lacks bugs that exist in the vanilla version of the game, so there are some differences in behavior (e.g. [issue #278](https://github.com/doukutsu-rs/doukutsu-rs/issues/278#issuecomment-2403594236)), but also includes features such as cutscene skip, lighting effects, subpixel scrolling and V-Sync support.
 
-Also some features are not planned to be implemented such as Steam achievements, leaderboard, coop offscreen or floor particles in Sand Zone.
+Also some features are not planned to be implemented such as Steam achievements, leaderboard, coop off-screen or floor particles in Sand Zone.
 
 ### Where are the saves/settings/logs?
 
@@ -45,7 +45,7 @@ If you have an app on your device called `Files` (app id `com.google.android.doc
 
 If there is no such application, then you can install [shortcut](https://play.google.com/store/apps/details?id=com.marc.files) for it and repeat with it the same actions described in the previous paragraph.
 
-If you don't want to install this shortcut, then install Material Files ([Google Play](https://play.google.com/store/apps/details?id=me.zhanghai.android.files)|[F-Droid](https://f-droid.org/en/packages/me.zhanghai.android.files/)|[Github Releases](https://github.com/zhanghai/MaterialFiles/releases)) by Hai Zhang. Once you open it, click on the menu icon `≡` -> `Add storage` -> `External storage` -> `≡` -> `doukutsu-rs` -> `USE THIS FOLDER` -> `ALLOW`. The `files` folder will appear in the menu, clicking on it will take you to the data dir doukutsu-rs.
+If you don't want to install this shortcut, then install Material Files ([Google Play](https://play.google.com/store/apps/details?id=me.zhanghai.android.files)|[F-Droid](https://f-droid.org/en/packages/me.zhanghai.android.files/)|[Github Releases](https://github.com/zhanghai/MaterialFiles/releases)) by Hai Zhang. Once you open it, click on the menu icon `≡` -> `Add storage` -> `External storage` -> `≡` -> `doukutsu-rs` -> `USE THIS FOLDER` -> `ALLOW`. The `files` folder will appear in the menu, clicking on it will take you to the doukutsu-rs internal storage directory.
 
 ## Features Support
 
@@ -55,9 +55,9 @@ Only mods that modify game data files (textures, maps, text scripts, music, soun
 
 ### Is multiplayer supported?
 
-Local co-op is **available on PC**, but is **missing on Android**, as the engine doesn't support gamepad and keayboard control on Android.
+Local co-op is **available on PC**, but is **missing on Android**, as the engine doesn't support gamepad and keyboard control on Android.
 
-However, [the port for Retroarch](https://github.com/DrGlaucous/doukutsu-rs-nm/releases/tag/RA-1.2.0) is stated by the developer to support local coop.
+However, [the port for RetroArch](https://github.com/DrGlaucous/doukutsu-rs-nm/releases/tag/RA-1.2.0) is stated by the developer to support local coop.
 
 ### Are saves from CS+ supported?
 
@@ -81,7 +81,7 @@ However, you can use [doukutsu-rs port for RetroArch](https://github.com/DrGlauc
 
 ### Which platforms is doukutsu-rs available on?
 
-doukutsu-rs is officialy supported on PC ([Windows 10+](#user-content-fn-3)[^3], Linux, macOS 10.12+) and Android 7+. The builds for these platforms are stable: release builds as well as nightly builds are available for them.
+doukutsu-rs is officially supported on PC ([Windows 10+](#user-content-fn-3)[^3], Linux, macOS 10.12+) and Android 7+. Builds for these platforms are stable: release builds as well as nightly builds are available for them.
 
 In addition, doukutsu-rs also has several experimental ports, such as the Nintendo Switch port. There are no fresh builds of the engine for experimental ports, due to the lack of active support for them by doukutsu-rs maintainers.
 
@@ -91,15 +91,7 @@ doukutsu-rs is available on the most common platforms, so **there are no plans**
 
 ### Why are there no new builds for Switch?
 
-Due to the lack of active support for this platform from the engine maintainers, the toolchain used to build the engine for this platform are obsolete and can no longer be used. Due to the lack of time and desire of the maintainers to address this issue, new builds aren't available.
-
-***
-
-To delve into the technical aspect of the issue, the patched _Rust toolchain_ version <kbd>1.67.0</kbd> and _libc_ were used to build this port. Several years have passed since the port was added, and in that time this version of toolchain is no longer suitable for building doukutsu-rs, as some dependencies have set the minimum required compiler version <kbd>>=1.80</kbd>. Rolling back to earlier versions of the dependencies where this restriction was not present does not help, as one of the dependencies still requires a compiler version <kbd>>=1.70</kbd>.
-
-**Why not just update the patched toolchain to the latest version?** As said before, lack of interest and/or free time of the doukutsu-rs maintainers.
-
-**Why not to backport this dependency?** This one dependency will require backporting several crates that depend on it. Besides, this is a temporary solution until we have to update some dependency that breaks the build again due to an outdated toolchain. Therefore, updating the toolchain seems to be a more rational option.
+The Switch port compilation didn't work for a long time, due to which there were no stable builds for this platform. However, the problem has been fixed, but given the experimental status of the port, there are currently no nightly builds for it. A stable build will be published along with a release of a new version of doukutsu-rs.
 
 ### The controls on Android are awkward, how do I customise them? How to make the buttons bigger or change their position?
 
@@ -133,7 +125,7 @@ They're used automatically if `Graphics -> Seasonal textures` option is enabled 
 
 ## Still have questions?
 
-&#x20;Feel free to ask them on the project's [Discord server](https://discord.gg/fbRsNNB) or [Github issues](https://github.com/doukutsu-rs/doukutsu-rs/issues/new/choose).
+&#x20;Feel free to ask them on the project's [Discord server](https://discord.gg/fbRsNNB) or [GitHub issues](https://github.com/doukutsu-rs/doukutsu-rs/issues/new/choose).
 
 [^1]: Cave Story Engine 2
 

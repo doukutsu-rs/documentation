@@ -8,10 +8,10 @@ Stable ports:
 
 Experimental ports:
 
-* Nintendo Switch (also reffered as Horizon);
+* Nintendo Switch (also referred as Horizon);
 * XBox/UWP (Universal Windows Platform).
 
-**Stable ports** are part of the upstream codebase, they are actively maintained and have official release builds. They can definetly be compiled and the compilation steps are known and most likely documented.
+**Stable ports** are part of the upstream codebase, they are actively maintained and have official release builds. They can definitely be compiled and the compilation steps are known and most likely documented.
 
 **Experimental ports**, on the other hand, typically don't have stable release and nightly builds, and their build algorithm may be undocumented or even broken. If you don't see there the build instruction for some port, then it is most likely that the compilation of this port is not possible or the build steps are unknown.
 
@@ -48,7 +48,7 @@ sudo apt install openjdk-17-jdk
 
 Android Studio is the primary IDE for Android applications development, so in this guide we'll use it.
 
-To install Android Studio, download it from [the Android Developers portal](https://developer.android.com/studio). The minimum version required for building doukutsu-rs is **Flamingo | 2022.2.1**.
+To install Android Studio, download it from [the Android Developers portal](https://developer.android.com/studio). The **minimum** version required for building doukutsu-rs is **Flamingo | 2022.2.1**.
 
 ***
 
@@ -74,8 +74,6 @@ chmod +x studio.sh
 
 ***
 
-
-
 If Android Studio is started without any errors, you can move to the next step.
 
 ### 3. Install Rust targets
@@ -86,9 +84,15 @@ The Android builds of doukutsu-rs supports ARMv7, ARMv8, x86 and x86-64 architec
 rustup target add aarch64-linux-android armv7-linux-androideabi i686-linux-android x86_64-linux-android
 ```
 
+The build process also requires the `cargo-ndk` utility to be installed:
+
+```
+cargo install cargo-ndk
+```
+
 ### 4. Install Android development kits
 
-Launch Android Sudio and on the welcome screen, press `"More actions"` and select `"SDK Manager"` from the dropdown menu. In the window that opens, tick `"Show package details"`.
+Launch Android Studio and on the welcome screen, press `"More actions"` and select `"SDK Manager"` from the drop-down menu. In the window that opens, tick `"Show package details"`.
 
 <figure><img src="../../.gitbook/assets/image.png" alt=""><figcaption><p><code>"Show Package Details"</code> is checked.</p></figcaption></figure>
 
@@ -100,7 +104,7 @@ Install exactly the development kits version, that are specified in the build co
 
 ### 5. Configuring the project
 
-When all dependencies are installed, we can finaly open the project in Android Studio and configure it for building.
+When all dependencies are installed, we can finally open the project in Android Studio and configure it for building.
 
 Open Android Studio, click `"Open project"` and select the `app` directory from the cloned doukutsu-rs repository.
 
@@ -138,16 +142,161 @@ Resync the project and try to run the build.
 
 ### 6. Build
 
-If you lucky enough to not encouter errors or troubles in the previous steps, you can click the hammer on the top panel or press `Ctrl+F9` to build the project. The output APK will be in the `app/app/build/outputs/apk/debug` folder.
+If you lucky enough to not encounter errors or troubles in the previous steps, you can click a hammer on the top panel or press `Ctrl+F9` to build the project. The output APK will be in the `app/app/build/outputs/apk/debug` folder.
 
 By default the debug builds that support only ARMv8 (`arm64`) architecture will be generated. If you want to make a debug build for another architecture, you need to change the targets field in the `cargoNdk.buildTypes.debug` section (it is located at the end of build config).
 
 ### 7. (Optional) Signing the build
 
-All builds **require** signing, unsigned builds cannot be installed (you will get an error, if you try to install an unsigned build). Debug builds are automatically signed by Android Studio's built-in keystore, but release builds requires manual configuration. To generate a signed release build, click **"Build"** -> **"Generate Signed Bundle / APK"**. Choose **"APK"** and the keystore for signing, if it exists, or create one if it doesn't.&#x20;
+All builds **require** signing, unsigned builds cannot be installed (you will get an error, if you try to install an unsigned build). Debug builds are automatically signed by Android Studio's built-in keystore, but release builds requires manual configuration. To generate a signed release build, click **"Build"** -> **"Generate Signed Bundle / APK"**. Choose **"APK"** and the keystore for signing, if it exists, or create one if it doesn't.
 
 {% hint style="info" %}
 If you create a keystore in the Android Studio, only the password and the issuer's "First and Last Name" fields are mandatory. All other fields can be left blank.
 {% endhint %}
 
 When you complete, Android Studio will automatically run the build with specified signing keystore. The generated build will be placed in `app/app/build/outputs/apk/release`.
+
+## Nintendo Switch (Horizon)
+
+{% include "../../.gitbook/includes/untitled.md" %}
+
+{% hint style="info" %}
+Although the Horizon port can _**probably**_ be compiled on 64-bit Windows using MSYS2, the build process has only been tested on x86-64 (AMD64) Linux system, so compilation on other platforms and architectures is not guaranteed.
+{% endhint %}
+
+Building the Horizon port will produce ≈15 GiB of build artifacts if our patched Rust toolchain is fresh enough to use precompiled LLVM binaries downloaded from Rust CI servers. Otherwise, you may also need to compile the LLVM backend, which will produce an additional ≈20 GiB of build artifacts. Thus, you will need between 15 and 40 GiB of free space to build this port.
+
+### 1. Install dependencies
+
+Build process of the Horizon port depends primarily on the Switch homebrew toolchain provided by devkitPro. It uses the `uam` utility to compile shaders, `deko3d` as a graphics API, and many other tools to compile and package doukutsu-rs in the format that can be run on Switch.
+
+devkitPro toolchains can be installed with the Arch Linux package manager `pacman`, also provided by devkitPro for macOS and other common Linux distros. On Widows they can be installed with a graphical installer. Setup instructions can be found on [the devkitPro Wiki](https://devkitpro.org/wiki/Getting_Started#Setup).
+
+After installing `pacman` (or `dkp-pacman`), install the Switch development kit:
+
+```
+sudo pacman -Sy switch-dev
+```
+
+Don't forget to set environment variables containing the path to the development kit installation folder:
+
+```
+export DEVKITPRO=/opt/devkitpro
+export DEVKITARM=/opt/devkitpro/devkitARM
+```
+
+You also need the same development dependencies, as for the building the Linux port on a Linux system ([#id-1.-install-the-development-dependencies](./#id-1.-install-the-development-dependencies "mention")), along with a few additional dependencies:
+
+#### Arch-based distributions (Arch Linux, Manjaro, EndeavourOS, etc.)
+
+```
+sudo pacman -Sy python python-distutils-extra ninja
+```
+
+#### Debian-based distributions (Debian, Ubuntu, Linux Mint, Pop!\_OS, etc.)
+
+```
+sudo apt install python3 python3-distutils-extra ninja-build
+```
+
+#### Red Hat-based distributions (CentOS, Fedora, etc.)
+
+```
+sudo dnf install python python-distutils-extra ninja-build
+```
+
+### 2. Build Rust toolchain
+
+We use a patched Rust toolchain to enable the `std` lib support for the Nintendo Switch target.
+
+Clone this toolchain:
+
+```
+git clone https://github.com/doukutsu-rs/rust-hos.git
+```
+
+The target definition files aren't included in the toolchain, so copy them from the `drshorizon` folder of the cloned doukutsu-rs repository:
+
+```
+cp drshorizon/aarch64* rust-hos/
+cd rust-hos
+```
+
+The build config is also not included in the toolchain, so copy the following contents into the `bootstrap.toml` file:
+
+```toml
+build.check-stage = 1
+build.build-stage = 1
+
+# Replace "x86_64-unknown-linux-gnu" with the target of your host platform
+# (e.g. "x86_64-pc-windows-msvc" on Windows with MSVC compiler).
+build.target = ["x86_64-unknown-linux-gnu", "aarch64-nintendo-switch.json"]
+
+build.docs = false
+build.extended = true
+build.tools = ["src"]
+
+# Incremental build may be useful when you rebuilds the toolchain often,
+# but usually you need to build it only once.
+rust.incremental = true
+
+# LTO increases build time significantly and gives not so big perfomance benefits,
+# so we disable it
+rust.lto = "off"
+
+# If you need to build the Rust compiler from scatch, set this field to false.
+rust.download-rustc = true
+
+# If you need to build the Rust compiler and LLVM from sratch, uncomment next lines
+# (just remove # at the lines start)
+# llvm.download-ci-llvm = false
+# llvm.targets = "AArch64;ARM;X86"
+# llvm.experimental-targets = ""
+# llvm.polly = true
+```
+
+Now you can build the toolchain:
+
+```
+./x build --stage 1
+```
+
+If the build completed successfully, install the compiled toolchain as `rust-switch`:
+
+```
+rustup toolchain link rust-switch build/host/stage1
+```
+
+Do not remove or move the toolchain folder or `build` folder, because “installing” the custom toolchain literally means creating a symlink to the toolchain folder under some toolchain name. Therefore, if you delete this folder, you will no longer be able to use this toolchain to compile the Horizon port.
+
+{% hint style="info" %}
+If you don't plan to recompile the toolchain later, you can delete all folders in the `build/host` directory except for `stage1` and `stage1-std` folders. It's better to do this after you ensure that the port compiles without errors.
+{% endhint %}
+
+### 3. Build doukutsu-rs
+
+Enter the `drshorizon` directory in the cloned doukutsu-rs repository and run the build script:
+
+```
+./build_debug.sh
+```
+
+Output file `drshorizon.nro` will be placed in the `target/aarch64-nintendo-switch/debug` folder.
+
+If you want to compile a release (optimized) build, run the `build_release.sh` script. The output file will be located in the `target/aarch64-nintendo-switch/release` folder.
+
+## Port feature completeness
+
+Table legend:
+
+* ✓ - implemented
+* \* - partially implemented
+* ❌ - unimplemented
+
+|          Feature         | Android |    Horizon    |
+| :----------------------: | :-----: | :-----------: |
+| Open user/data directory |    ✓    | ❌<sup>1</sup> |
+|  Portable user directory |    ❌    | ❌<sup>1</sup> |
+
+1. Horizon doesn't have a builtin file manager, and there are no sense to implement a portable user directory for this platform.
+
