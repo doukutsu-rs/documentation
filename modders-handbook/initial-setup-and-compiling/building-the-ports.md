@@ -1,19 +1,22 @@
 # Building the ports
 
-doukutsu-rs has three official ports: 1 stable and 2 experimental.
+doukutsu-rs has two official ports: one stable and one experimental.
+
+{% hint style="info" %}
+Although the term "port" is often used in relation to PC builds, doukutsu-rs was originally developed for the PC and only later **ported** to other platforms.
+{% endhint %}
 
 Stable ports:
 
-* Android.
+* Android
 
 Experimental ports:
 
-* Nintendo Switch (also referred as Horizon);
-* XBox/UWP (Universal Windows Platform).
+* Nintendo Switch (also referred as Horizon)
 
 **Stable ports** are part of the upstream codebase, they are actively maintained and have official release builds. They can definitely be compiled and the compilation steps are known and most likely documented.
 
-**Experimental ports**, on the other hand, typically don't have stable release and nightly builds, and their build algorithm may be undocumented or even broken. If you don't see there the build instruction for some port, then it is most likely that the compilation of this port is not possible or the build steps are unknown.
+**Experimental ports**, on the other hand, typically don't have nightly builds, and their build algorithm may be undocumented or even broken. But the main reason for classifying a port as experimental is its instability.
 
 Please note that this guide provides instructions for building ports on PC only. So first install Rust and clone the doukutsu-rs repository, as described in [the previous section](./#id-2.-install-rust).
 

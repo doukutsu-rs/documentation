@@ -83,7 +83,7 @@ However, you can use [doukutsu-rs port for RetroArch](https://github.com/DrGlauc
 
 doukutsu-rs is officially supported on PC ([Windows 10+](#user-content-fn-3)[^3], Linux, macOS 10.12+) and Android 7+. Builds for these platforms are stable: release builds as well as nightly builds are available for them.
 
-In addition, doukutsu-rs also has several experimental ports, such as the Nintendo Switch port. There are no fresh builds of the engine for experimental ports, due to the lack of active support for them by doukutsu-rs maintainers.
+In addition, doukutsu-rs also has an experimental port for Nintendo Switch. Experimental ports may be unstable and lack certain features.
 
 ### You should make a port to the XYZ platform.
 
@@ -131,4 +131,4 @@ They're used automatically if `Graphics -> Seasonal textures` option is enabled 
 
 [^2]: RiiR — Rewrite it in Rust.
 
-[^3]: Although Windows 7 has been chosen by the community to be supported and doukutsu-rs can be built for it, there are no release builds targeting this platform.
+[^3]: Although doukutsu-rs can be built for Windows 7, there are no release builds targeting this platform.
