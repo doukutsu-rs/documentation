@@ -30,11 +30,11 @@ If you created a portable user data directory, the saves will be in the `user` f
 
 Otherwise, the location of the user data depends on the platform:
 
-* on **Windows**: `%LOCALAPPDATA%\doukutsu-rs\data\` (that is `AppData\Local\doukutsu-rs\data\`);
-* on **macOS**: `~/Library/Application Support/doukutsu-rs/saves`;
+* on **Windows**: `%LOCALAPPDATA%\doukutsu-rs\data\` (that is `AppData\Local\doukutsu-rs\data\`)
+* on **macOS**: `~/Library/Application Support/doukutsu-rs/saves`
 * on **Linux**:
-  * if installed from **Flatpak**: `$XDG_DATA_HOME/doukutsu-rs/` (usually this is `$HOME/.var/app/io.github.doukutsu_rs.doukutsu-rs/data/doukutsu-rs/data`);
-  * if you downloaded **the `.elf` executable file**: `$HOME/.local/share/doukutsu-rs/`;
+  * if installed from **Flatpak**: `$XDG_DATA_HOME/doukutsu-rs/` (usually this is `$HOME/.var/app/io.github.doukutsu_rs.doukutsu-rs/data/doukutsu-rs/data`)
+  * if you downloaded **the `.elf` executable file**: `$HOME/.local/share/doukutsu-rs/`
 * on **Android**: see [#how-to-open-game-user-data-directory-on-android](faq.md#how-to-open-game-user-data-directory-on-android "mention")
 
 The logs are stored in the `logs` folder next to the user data directory.

@@ -29,3 +29,7 @@
 
 * [Introduction](references/introduction.md)
 * [CS+KAGE reference](references/cs+-switch-reference.md)
+
+## Project Conventions
+
+* [Naming](project-conventions/naming.md)
