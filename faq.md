@@ -53,6 +53,8 @@ If you don't want to install this shortcut, then install Material Files ([Google
 
 Only mods that modify game data files (textures, maps, text scripts, music, sounds) and don't modify the original game executable are supported. Cave Story+ mods and challenges are also supported, but there are [graphics issues](https://github.com/doukutsu-rs/doukutsu-rs/issues/118) for some mods.
 
+Shortly, doukutsu-rs doesn't support almost all Cave Story mods, including Jenka's Nightmare.
+
 ### Is multiplayer supported?
 
 Local co-op is **available on PC**, but is **missing on Android**, as the engine doesn't support gamepad and keyboard control on Android.

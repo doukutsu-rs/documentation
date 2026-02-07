@@ -55,3 +55,5 @@ Setting up doukutsu-rs on your Windows PC is straightforward - just follow those
 **Setup Complete!**
 
 You are now ready to play doukutsu-rs. Run the `doukutsu-rs.{version}.exe` program file located in your "doukutsu-rs folder" to start the game. Enjoy!
+
+{% include "../.gitbook/includes/ask-installation-usage-questions-on-gh-issues-or-the-discord-server.md" %}

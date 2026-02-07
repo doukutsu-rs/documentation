@@ -216,3 +216,5 @@ Each method has its pros and cons, reflecting the flexibility of Linux!
 * **Compiling from source** is for advanced users who want maximum control and are comfortable with a bit more work.
 
 No matter which way you choose, have fun playing doukutsu-rs on Linux!
+
+{% include "../.gitbook/includes/ask-installation-usage-questions-on-gh-issues-or-the-discord-server.md" %}

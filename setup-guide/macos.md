@@ -9,7 +9,7 @@
 
 As with most Mac programs, it is recommended that you store the application file (`dokutsu-rs.app`) in either the global or user `Applications` directory on your computer.
 
-### 2. Add game data
+### 2. Add Game Data
 
 * Right-click on the downloaded application (`dokutsu-rs.app`) and click `Show Package Contents`.
 * Inside the application, navigate to `Contents/Resources/` and place the Cave Story game data directory in the folder. The data directory is a folder named "**data**" in the original game files.
@@ -35,3 +35,5 @@ Modern Mac computers [only permit software that has been signed and notarised to
 **Setup Complete!**
 
 You are now ready to play doukutsu-rs. Run `doukutsu-rs.app` to start the game. Enjoy!
+
+{% include "../.gitbook/includes/ask-installation-usage-questions-on-gh-issues-or-the-discord-server.md" %}

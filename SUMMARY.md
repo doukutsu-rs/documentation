@@ -14,6 +14,7 @@
   * [Windows](setup-guide/windows.md)
   * [Linux](setup-guide/linux.md)
   * [macOS](setup-guide/macos.md)
+  * [Android](setup-guide/android.md)
 * [Advanced configuration](advanced-configuration.md)
 * [FAQ](faq.md)
 
