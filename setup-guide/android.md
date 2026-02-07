@@ -11,7 +11,7 @@
 
 ### 2. Add Game Data
 
-When you launch doukutsu-rs, you will be prompted to download data files, if they're missing. These files are the game data of the English translation by Aeon Genesis for the freeware (2004) edition of the game, which are downloaded from the [Cave Story Tribute Site](https://www.cavestory.org/download/cave-story.php). You can also install your own data files, e.g. game data from purchased editions of Cave Story+ for PC (2011) or Switch (2017). Do this by first copying the game data (the `data` folder) to your phone, then copying these files to doukutsu-rs scoped storage. Here's how to do it.
+When you launch doukutsu-rs, you will be prompted to download data files, if they're missing. These files are the game data of the English translation by Aeon Genesis for the freeware (2004) edition of the game, which are downloaded from the [Cave Story Tribute Site](https://www.cavestory.org/download/cave-story.php). You can also install your own data files, e.g. game data from purchased editions of Cave Story+ for PC (2011) or Switch (2017). Do this by first copying the game data (the `data` folder) to your device, then copying these files to doukutsu-rs scoped storage. Here's how to do it.
 
 If there's already a data folder in doukutsu-rs scoped storage, delete it or rename it. If you copy data files to an existing data folder, doukutsu-rs might use the old data files instead of the ones you copied.
 
