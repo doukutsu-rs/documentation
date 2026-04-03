@@ -2,7 +2,7 @@
 
 ## What doukutsu-rs is
 
-doukutsu-rs is not a game, but an engine for the game Cavestory.
+doukutsu-rs is not a game, but an engine for the game Cave Story.
 
 It is not a decompilation, as it is written from scratch. While it generally attempts to recreate the behavior of the original game where appropriate, it never aimed to completely replicate the behavior of the game or its executable file.
 
