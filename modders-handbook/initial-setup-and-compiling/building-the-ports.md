@@ -164,10 +164,8 @@ When you complete, Android Studio will automatically run the build with specifie
 {% include "../../.gitbook/includes/untitled.md" %}
 
 {% hint style="info" %}
-Although the Horizon port can _**probably**_ be compiled on 64-bit Windows using MSYS2, the build process has only been tested on x86-64 (AMD64) Linux system, so compilation on other platforms and architectures is not guaranteed.
+Although the Horizon port can _**probably**_ be compiled on 64-bit Windows using MSYS2, the build process has only been tested on x86-64 (AMD64) Linux system, so compilation on other platforms and architectures is not guaranteed, and isn't covered in this guide.
 {% endhint %}
-
-Building the Horizon port will produce ≈15 GiB of build artifacts if our patched Rust toolchain is fresh enough to use precompiled LLVM binaries downloaded from Rust CI servers. Otherwise, you may also need to compile the LLVM backend, which will produce an additional ≈20 GiB of build artifacts. Thus, you will need between 15 and 40 GiB of free space to build this port.
 
 ### 1. Install dependencies
 
@@ -208,14 +206,32 @@ sudo apt install python3 python3-distutils-extra ninja-build
 sudo dnf install python python-distutils-extra ninja-build
 ```
 
-### 2. Build Rust toolchain
+### 2. Install Rust toolchain
 
 We use a patched Rust toolchain to enable the `std` lib support for the Nintendo Switch target.
 
-Clone this toolchain:
+You can either **(A)** install it from the precompiled archive, or **(B)** compile the toolchain from sources.
+
+#### A. Installing a precompiled package
+
+Download the latest version of the toolchain from [its repository](https://github.com/doukutsu-rs/rust-hos/releases) and extract the archive to `$HOME/.rustup/toolchains` on Linux.
+
+Enter the `drshorizon` directory in the cloned doukutsu-rs repository and and set a toolchain to be used for building (replace `TOOLCHAIN` with the name of the folder you extracted from the downloaded toolchain archive, i.e. `1.92.0-switch-x86_64-unknown-linux-gnu`):
 
 ```
-git clone https://github.com/doukutsu-rs/rust-hos.git
+rustup override set TOOLCHAIN
+```
+
+#### B. Build from sources
+
+{% hint style="info" %}
+Building the toolchain will produce ≈20 GiB of build artifacts, which will require a total of ≈30 GiB of free disk space to build the toolchain.
+{% endhint %}
+
+Clone this toolchain (if you need to access the commit history, remove the `--depth 1` flag):
+
+```
+git clone --depth 1 https://github.com/doukutsu-rs/rust-hos.git
 ```
 
 The target definition files aren't included in the toolchain, so copy them from the `drshorizon` folder of the cloned doukutsu-rs repository:
@@ -228,9 +244,6 @@ cd rust-hos
 The build config is also not included in the toolchain, so copy the following contents into the `bootstrap.toml` file:
 
 ```toml
-build.check-stage = 1
-build.build-stage = 1
-
 # Replace "x86_64-unknown-linux-gnu" with the target of your host platform
 # (e.g. "x86_64-pc-windows-msvc" on Windows with MSVC compiler).
 build.target = ["x86_64-unknown-linux-gnu", "aarch64-nintendo-switch.json"]
@@ -247,15 +260,14 @@ rust.incremental = true
 # so we disable it
 rust.lto = "off"
 
-# If you need to build the Rust compiler from scatch, set this field to false.
-rust.download-rustc = true
+# Since Rust CI builds are deleted over time, we'll build Rust and LLVM from sources
+rust.download-rustc = false
 
-# If you need to build the Rust compiler and LLVM from sratch, uncomment next lines
-# (just remove # at the lines start)
-# llvm.download-ci-llvm = false
-# llvm.targets = "AArch64;ARM;X86"
-# llvm.experimental-targets = ""
-# llvm.polly = true
+[llvm]
+download-ci-llvm = false
+targets = "AArch64;ARM;X86"
+experimental-targets = ""
+polly = true
 ```
 
 Now you can build the toolchain:
@@ -275,6 +287,12 @@ Do not remove or move the toolchain folder or `build` folder, because “install
 {% hint style="info" %}
 If you don't plan to recompile the toolchain later, you can delete all folders in the `build/host` directory except for `stage1` and `stage1-std` folders. It's better to do this after you ensure that the port compiles without errors.
 {% endhint %}
+
+Enter the `drshorizon` directory in the cloned doukutsu-rs repository and and set a toolchain to be used for building:
+
+```
+rustup override set rust-switch
+```
 
 ### 3. Build doukutsu-rs
 
