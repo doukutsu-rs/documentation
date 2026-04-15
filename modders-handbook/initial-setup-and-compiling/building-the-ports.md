@@ -22,16 +22,24 @@ Please note that this guide provides instructions for building ports on PC only.
 
 ## Android
 
+{% hint style="info" %}
+Starting 15.04.2026, the Android port has been refactored and moved to the SDL2 backend in order to support controllers. That is why the documentation includes instructions for building the new version of the port (Starting 15.04.2026) and versions that ran with the Glutin backend (0.102.0-beta7 and earlier).
+{% endhint %}
+
+{% hint style="warning" %}
+On Windows, the username must contain only ASCII characters; otherwise, the build will fail for versions later than 0.102.0-beta7. This requirement does not apply to version 0.102.0-beta7 and earlier.
+{% endhint %}
+
 ### 1. Install Java
 
 The Android port is written in Java, and the build tools require the Java Runtime, so you need to install JDK (Java Development Kit) to build this port. The **minimum** version of Java required to run Android development tools is **Java 17**.
 
-#### Windows
-
+{% tabs %}
+{% tab title="Windows" %}
 On Windows you can install JDK following [the official installation instructions](https://docs.oracle.com/en/java/javase/21/install/installation-jdk-microsoft-windows-platforms.html#GUID-A7E27B90-A28D-4237-9383-A58B416071CA) provided by Oracle.
+{% endtab %}
 
-#### Linux
-
+{% tab title="Linux" %}
 On Linux, JDK is usually installing from the repositories of the distribution you are using.
 
 **Arch-based distributions (Arch Linux, Manjaro, EndeavourOS, etc.):**
@@ -46,21 +54,31 @@ sudo pacman -Sy jdk17-openjdk
 sudo apt update
 sudo apt install openjdk-17-jdk
 ```
+{% endtab %}
+{% endtabs %}
 
 ### 2. Install Android Studio
 
 Android Studio is the primary IDE for Android applications development, so in this guide we'll use it.
 
-To install Android Studio, download it from [the Android Developers portal](https://developer.android.com/studio). The **minimum** version required for building doukutsu-rs is **Flamingo | 2022.2.1**.
+To install Android Studio, download it from [the Android Developers portal](https://developer.android.com/studio).
 
-***
+{% tabs %}
+{% tab title="Starting 15.04.2026" %}
+The **minimum** version required for building doukutsu-rs is **Meerkat Feature Drop | 2024.3.2**.
+{% endtab %}
 
-#### Windows
+{% tab title="0.102.0-beta7 and earlier" %}
+The **minimum** version required for building doukutsu-rs is **Flamingo | 2022.2.1**.
+{% endtab %}
+{% endtabs %}
 
+{% tabs %}
+{% tab title="Windows" %}
 Download the installer and just install Android Studio. Then run it via a shortcut in the Start Menu or Desktop.
+{% endtab %}
 
-#### Linux
-
+{% tab title="Linux" %}
 After downloading the archive, extract it to any location you want (in this example we will extract it into `~/.bin`):
 
 ```
@@ -74,6 +92,8 @@ cd ~/.bin/android-studio/bin
 chmod +x studio.sh
 ./studio.sh
 ```
+{% endtab %}
+{% endtabs %}
 
 ***
 
@@ -87,11 +107,15 @@ The Android builds of doukutsu-rs supports ARMv7, ARMv8, x86 and x86-64 architec
 rustup target add aarch64-linux-android armv7-linux-androideabi i686-linux-android x86_64-linux-android
 ```
 
+{% tabs %}
+{% tab title="0.102.0-beta7 and earlier" %}
 The build process also requires the `cargo-ndk` utility to be installed:
 
 ```
 cargo install cargo-ndk
 ```
+{% endtab %}
+{% endtabs %}
 
 ### 4. Install Android development kits
 
@@ -99,7 +123,15 @@ Launch Android Studio and on the welcome screen, press `"More actions"` and sele
 
 <figure><img src="../../.gitbook/assets/image.png" alt=""><figcaption><p><code>"Show Package Details"</code> is checked.</p></figcaption></figure>
 
+{% tabs %}
+{% tab title="Starting from 15.04.2026" %}
+To understand what version of the development kits you need to install, look at the `drsandroid/app/build.gradle.kts` file from the doukutsu-rs directory. In this build config `compileSdkVersion` property stores the API level, that you can use to install the required Platform SDK. `buildToolsVersion` and `ndkVersion` store the exact version of build tools and NDK, required for build. Also install **CMake 3.22+** in the SDK Manager.
+{% endtab %}
+
+{% tab title="0.102.0-beta7 and earlier" %}
 To understand what version of the development kits you need to install, look at the `app/app/build.gradle` file from the doukutsu-rs directory. In this build config `compileSdkVersion` property stores the API level, that you can use to install the required Platform SDK. `buildToolsVersion` and `ndkVersion` store the exact version of build tools and NDK, required for build. Also install **CMake 3.18+** in the SDK Manager.
+{% endtab %}
+{% endtabs %}
 
 {% hint style="warning" %}
 Install exactly the development kits version, that are specified in the build config. Otherwise the build can fail.
@@ -107,8 +139,56 @@ Install exactly the development kits version, that are specified in the build co
 
 ### 5. Configuring the project
 
+{% tabs %}
+{% tab title="Starting 15.04.2026" %}
+Initialize port-specific build dependencies (run this command from the cloned doukutsu-rs directory):
+
+```
+git submodule update --init --recursive drsandroid
+```
+{% endtab %}
+{% endtabs %}
+
 When all dependencies are installed, we can finally open the project in Android Studio and configure it for building.
 
+{% tabs %}
+{% tab title="Starting 15.04.2026" %}
+Open Android Studio, click `"Open project"` and select the `drsandroid` directory from the cloned doukutsu-rs repository.
+
+<figure><img src="../../.gitbook/assets/android-open-project.png" alt=""><figcaption><p>Open this exact folder, not the cloned repository itself or anything else.</p></figcaption></figure>
+
+When you open the project, in the bottom right corner will appear a notification asking you to install Android Gradle Plugin. Install it. If it will suggest to upgrade it, dismiss this notification.
+
+After that, open `build.gralde.kts` file from the `app` module and sync the project.
+
+<figure><img src="../../.gitbook/assets/android-build-script.png" alt=""><figcaption><p>Open the build config from the <code>app</code> module and sync the project.</p></figcaption></figure>
+
+{% hint style="info" %}
+If after sync or build attempt, you get an error like `"SDK not found"` or `"NDK not found"`, but you are sure that you have installed the correct versions of SDK and NDK, you need to manually specify the paths to them.
+
+Create a `local.properties` file and place the following content in it (replace `{ANDROID SDK installation path}` with the absolute path where you installed the Android SDK and `{NDK version}` with the version of NDK specified in the doukutsu-rs build config):
+
+{% code title="drsandroid/local.properties" overflow="wrap" lineNumbers="true" fullWidth="false" %}
+```properties
+sdk.dir={ANDROID SDK installation path}
+ndk.dir={ANDROID SDK installation path}/ndk/{NDK version}/
+```
+{% endcode %}
+
+For example, if you are working on Windows and have installed SDK in the `C:\Android\Sdk`, this file will look like this:
+
+{% code title="drsandroid/local.properties" overflow="wrap" lineNumbers="true" %}
+```properties
+sdk.dir=C\:\\Android\\Sdk
+ndk.dir=C\:\\Android\\Sdk\\ndk\\25.2.9519653\\
+```
+{% endcode %}
+
+Resync the project and try to run the build.
+{% endhint %}
+{% endtab %}
+
+{% tab title="0.102.0-beta7 and earlier" %}
 Open Android Studio, click `"Open project"` and select the `app` directory from the cloned doukutsu-rs repository.
 
 <figure><img src="../../.gitbook/assets/image (1).png" alt=""><figcaption><p>Open this exact folder, not the cloned repository itself or anything else.</p></figcaption></figure>
@@ -116,6 +196,8 @@ Open Android Studio, click `"Open project"` and select the `app` directory from 
 When you open the project, in the bottom right corner will appear a notification asking you to install Android Gradle Plugin. Install it. If it will suggest to upgrade it, dismiss this notification.
 
 After that, open `build.gralde` file from the `app` module and sync the project.
+
+<figure><img src="../../.gitbook/assets/image (2).png" alt=""><figcaption><p>Open the build config from the <code>app</code> module and sync the project.</p></figcaption></figure>
 
 {% hint style="info" %}
 If after sync or build attempt, you get an error like `"SDK not found"` or `"NDK not found"`, but you are sure that you have installed the correct versions of SDK and NDK, you need to manually specify the paths to them.
@@ -140,14 +222,26 @@ ndk.dir=C\:\\Android\\Sdk\\ndk\\25.2.9519653\\
 
 Resync the project and try to run the build.
 {% endhint %}
-
-<figure><img src="../../.gitbook/assets/image (2).png" alt=""><figcaption><p>Open the build config from the <code>app</code> module and sync the project.</p></figcaption></figure>
+{% endtab %}
+{% endtabs %}
 
 ### 6. Build
 
-If you lucky enough to not encounter errors or troubles in the previous steps, you can click a hammer on the top panel or press `Ctrl+F9` to build the project. The output APK will be in the `app/app/build/outputs/apk/debug` folder.
+If you lucky enough to not encounter errors or troubles in the previous steps, you can click a hammer on the top panel or press `Ctrl+F9` to build the project.
+
+{% tabs %}
+{% tab title="Starting 15.04.2026" %}
+The output APK will be in the `drsandroid/app/build/outputs/apk/debug` folder.
+
+By default the debug builds that support only ARMv8 (`arm64`) and x86\_64architecture will be generated. If you want to make a debug build for another architecture, you need to change the architectures list in the `android.buildTypes.debug.ndk` section.
+{% endtab %}
+
+{% tab title="0.102.0-beta7 and earlier" %}
+The output APK will be in the `app/app/build/outputs/apk/debug` folder.
 
 By default the debug builds that support only ARMv8 (`arm64`) architecture will be generated. If you want to make a debug build for another architecture, you need to change the targets field in the `cargoNdk.buildTypes.debug` section (it is located at the end of build config).
+{% endtab %}
+{% endtabs %}
 
 ### 7. (Optional) Signing the build
 
@@ -157,7 +251,17 @@ All builds **require** signing, unsigned builds cannot be installed (you will ge
 If you create a keystore in the Android Studio, only the password and the issuer's "First and Last Name" fields are mandatory. All other fields can be left blank.
 {% endhint %}
 
-When you complete, Android Studio will automatically run the build with specified signing keystore. The generated build will be placed in `app/app/build/outputs/apk/release`.
+When you complete, Android Studio will automatically run the build with specified signing keystore.
+
+{% tabs %}
+{% tab title="Starting 15.04.2026" %}
+The generated build will be placed in `drsandroid/app/build/outputs/apk/release`.
+{% endtab %}
+
+{% tab title="0.102.0-beta7 and earlier" %}
+The generated build will be placed in `app/app/build/outputs/apk/release`.
+{% endtab %}
+{% endtabs %}
 
 ## Nintendo Switch (Horizon)
 
@@ -225,7 +329,7 @@ rustup override set TOOLCHAIN
 #### B. Build from sources
 
 {% hint style="info" %}
-Building the toolchain will produce ≈20 GiB of build artifacts, which will require a total of ≈30 GiB of free disk space to build the toolchain.
+Building the toolchain will produce ≈20 GiB of build artifacts, which will require a total of ≈30 GiB of free disk space to build the port.
 {% endhint %}
 
 Clone this toolchain (if you need to access the commit history, remove the `--depth 1` flag):

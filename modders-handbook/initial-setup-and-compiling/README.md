@@ -62,6 +62,14 @@ Once CMake is installed, we have installed all of the tools we need to compile t
 
 Since doukutsu-rs uses Git for version control, you'd normally want to clone the repository using `git`, however, to make it simpler, in this guide we will just download the source code as a ZIP file.
 
+{% hint style="warning" %}
+To be able to build the ports, you need to [install Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git#_installing_on_windows) and clone the repository instead of downloading it as a ZIP archive:
+
+```
+git clone https://github.com/doukutsu-rs/doukutsu-rs.git
+```
+{% endhint %}
+
 Head over to [our GitHub repository](https://github.com/doukutsu-rs/doukutsu-rs), click on the green "Code" button and select "Download ZIP".
 
 ![Download the doukutsu-rs repository as a ZIP.](<../../.gitbook/assets/image (15).png>)
@@ -71,7 +79,7 @@ You may extract the contents of the ZIP archive wherever you want, however, we a
 * in a system directory, or any directory that requires administrator access (such as Program Files)
 * in a cloud sync directory (such as directories synced to OneDrive) - this is because there will be lots of files, which will not only waste your cloud storage, but such folders are known for not being able to handle many smaller files too well (and efficiently)
 
-> TL;DR: download the [source code from GitHub](https://github.com/doukutsu-rs/doukutsu-rs) and extract it to a non-administrator directory.
+> TL;DR: download the [source code from GitHub](https://github.com/doukutsu-rs/doukutsu-rs) and extract it to a non-administrator directory. If you want to build the ports, clone it using [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git#_installing_on_windows) instead.
 
 ### 5. Compile the project
 
@@ -121,10 +129,10 @@ Naturally, most of the installation process will happen through your distributio
 
 To get started, we will need to following software:
 
-* gcc or clang: for compiling the project's C/C++ dependencies
-* cmake: the build system used by some dependencies
-* git: for cloning the source files and the game data files
-* rust: to compile the project
+* **gcc** or **clang**: for compiling the project's C/C++ dependencies
+* **cmake**: the build system used by some dependencies
+* **git**: for cloning the source files and the game data files
+* **rust**: to compile the project
 
 How you're going to install these dependencies depends on what Linux distribution you're using. We will cover the three most popular ones.
 
@@ -132,21 +140,21 @@ How you're going to install these dependencies depends on what Linux distributio
 
 ```
 sudo apt update
-sudo apt install build-essential cmake git
+sudo apt install build-essential cmake git libwayland-dev libxkbcommon-dev libdecor-0-dev
 ```
 
 #### Arch-based distributions (Arch Linux, Manjaro, EndeavourOS, etc.)
 
 ```
 sudo pacman -Sy
-sudo pacman -S base-devel cmake git
+sudo pacman -S base-devel cmake git wayland libxkbcommon libdecor
 ```
 
 #### Red Hat-based distributions (CentOS, Fedora, etc.)
 
 ```
 sudo dnf upgrade
-sudo dnf install make automake gcc gcc-c++ kernel-devel cmake git
+sudo dnf install make automake gcc gcc-c++ kernel-devel cmake git wayland-devel libxkbcommon-devel libdecor-devel
 ```
 
 {% hint style="warning" %}
@@ -169,8 +177,8 @@ Press `1` and the Enter key, when prompted for installation options.
 
 Once the installation has completed, you might want to add the Rust binaries to your PATH environment variable. To do this, you want to edit your shell configuration file.
 
-#### bash
-
+{% tabs %}
+{% tab title="bash" %}
 ```
 nano ~/.bashrc
 ```
@@ -186,8 +194,10 @@ Press Ctrl+S and Ctrl+X when done, then run:
 ```
 source ~/.bashrc
 ```
+{% endtab %}
 
-#### zsh
+{% tab title="zsh" %}
+
 
 ```
 nano ~/.zshrc
@@ -204,8 +214,10 @@ Press Ctrl+S and Ctrl+X when done, then run:
 ```
 source ~/.zshrc
 ```
+{% endtab %}
 
-#### fish
+{% tab title="fish" %}
+
 
 ```
 nano ~/.config/fish/config.fish
@@ -222,6 +234,8 @@ Press Ctrl+S and Ctrl+X when done, then run:
 ```
 source ~/.config/fish/config.fish
 ```
+{% endtab %}
+{% endtabs %}
 
 ...and just like that you should be ready to go. We can start cloning the repository!
 
