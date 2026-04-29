@@ -51,9 +51,9 @@ If you don't want to install this shortcut, then install Material Files ([Google
 
 ### Are the mods supported?
 
-Only mods that modify game data files (textures, maps, text scripts, music, sounds) and don't modify the original game executable are supported. Cave Story+ mods and challenges are also supported, but there are [graphics issues](https://github.com/doukutsu-rs/doukutsu-rs/issues/118) for some mods.
-
 Shortly, doukutsu-rs doesn't support almost all Cave Story mods, including Jenka's Nightmare.
+
+Only mods that modify game data files (textures, maps, text scripts, music, sounds) and don't modify the original game executable are supported. Cave Story+ mods and challenges are also supported, but there are [graphics issues](https://github.com/doukutsu-rs/doukutsu-rs/issues/118) for some mods.
 
 ### Is multiplayer supported?
 
@@ -77,9 +77,7 @@ No, but [the DrGlaucous's fork](https://github.com/DrGlaucous/doukutsu-rs-nm) su
 
 ### Is controller supported on Android?
 
-Currently, the only control method available for native Android builds is touch screen controls. Keyboard or gamepad controls are not supported.
-
-However, you can use [doukutsu-rs port for RetroArch](https://github.com/DrGlaucous/doukutsu-rs-nm/releases/tag/RA-1.2.0), which supports controller. This is currently the only reliable solution to this problem. Information on usage and installation can be found in the [port repository](https://github.com/DrGlaucous/doukutsu-rs-nm/tree/retroarch-dev#use).
+Starting April 15, 2026 (version 0.102.0-795), all nightly builds support controllers.
 
 ### Which platforms is doukutsu-rs available on?
 
@@ -93,7 +91,7 @@ doukutsu-rs is available on the most common platforms, so **there are no plans**
 
 ### Why are there no new builds for Switch?
 
-The Switch port compilation didn't work for a long time, due to which there were no stable builds for this platform. However, the problem has been fixed, but given the experimental status of the port, there are currently no nightly builds for it. A stable build will be published along with a release of a new version of doukutsu-rs.
+The Switch port compilation didn't work for a long time, due to which there were no new builds for this platform. However, the problem has been fixed, but given the experimental status of the port, there are currently no nightly builds for it. A stable build will be published along with a release of a new version of doukutsu-rs.
 
 ### The controls on Android are awkward, how do I customise them? How to make the buttons bigger or change their position?
 
@@ -104,10 +102,6 @@ No way. You cannot change the location of touch screen controls and their size. 
 Although you can try changing the size and position of the buttons in the source code and rebuild the executable file, but this is very inconvenient and will take some time to find the right values.
 
 If you're ready for it, in the file [src/input/touch\_controls.rs](https://github.com/doukutsu-rs/doukutsu-rs/blob/2f1159c14f671bb77e845d46b48de9fcfb5eb814/src/input/touch_controls.rs#L100-L146) on line 100-146 you can adjust the location of controls (the first argument of the `add_rect_tinted` function is an X-axis coordinate, and the second argument is a Y-axis coordinate), and in the file [src/input/touch\_player\_controller.rs](https://github.com/doukutsu-rs/doukutsu-rs/blob/2f1159c14f671bb77e845d46b48de9fcfb5eb814/src/input/touch_player_controller.rs#L81-L239) on line 81-239 you can adjust the zones for registering button presses (the zones in which the game will count pressing a particular button).
-
-### When will native gamepad or any other thing support be added to the Android port?
-
-Someday. ¯\\\_(ツ)\_/¯
 
 ## Game Info
 
