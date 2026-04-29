@@ -320,7 +320,7 @@ You can either **(A)** install it from the precompiled archive, or **(B)** compi
 
 Download the latest version of the toolchain from [its repository](https://github.com/doukutsu-rs/rust-hos/releases) and extract the archive to `$HOME/.rustup/toolchains` on Linux.
 
-Enter the `drshorizon` directory in the cloned doukutsu-rs repository and and set a toolchain to be used for building (replace `TOOLCHAIN` with the name of the folder you extracted from the downloaded toolchain archive, i.e. `1.92.0-switch-x86_64-unknown-linux-gnu`):
+Enter the `drshorizon` directory in the cloned doukutsu-rs repository and and set a toolchain to be used for building (replace `TOOLCHAIN` with the name of the folder you extracted from the downloaded toolchain archive, i.e. `1.92.0-switch`):
 
 ```
 rustup override set TOOLCHAIN
