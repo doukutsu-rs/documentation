@@ -20,7 +20,7 @@ You cannot use environment variables to configure gameplay or visual aspects, bu
 
 **Type**: `string`
 
-This variable specifies the full path to the game data directory. By default, if this variable is missing, the engine searches for game data in the current working directory and in the same folder where the engine executable file is located.
+This variable specifies the full path to the game data directory. By default, if this variable is missing, the engine searches for game data in the same folder where the engine executable file is located.
 
 ### CAVESTORY\_NO\_OPENGL
 
