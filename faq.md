@@ -57,9 +57,9 @@ Only mods that modify game data files (textures, maps, text scripts, music, soun
 
 ### Is multiplayer supported?
 
-Local co-op is **available on PC**, but is **missing on Android**, as the engine doesn't support gamepad and keyboard control on Android.
+Local co-op is available on PC, and starting with version 1.0.0, it's also available on Android.
 
-However, [the port for RetroArch](https://github.com/DrGlaucous/doukutsu-rs-nm/releases/tag/RA-1.2.0) is stated by the developer to support local coop.
+Remote co-op (netplay) is not supported, and there are no plans to work on it in the near future.
 
 ### Are saves from CS+ supported?
 
@@ -67,17 +67,19 @@ However, [the port for RetroArch](https://github.com/DrGlaucous/doukutsu-rs-nm/r
 
 doukutsu-rs uses a freeware compatible save format, so each slot is stored in a separate file. Cave Story+ saves are stored in a single file, so doukutsu-rs only reads the first slot from this file, and writes only the first slot to it.
 
-However, work on adding support for CS+ and CS+ Switch saves has already [started](https://github.com/doukutsu-rs/doukutsu-rs/pull/317).
+However, work on adding support for CS+ (PC, 2011) and CS+ Switch saves has already [started](https://github.com/doukutsu-rs/doukutsu-rs/pull/317).
 
 ### Is a fixed window ratio (e.g. 4:3 as in the freeware) or resolution supported?
 
-No, but [the DrGlaucous's fork](https://github.com/DrGlaucous/doukutsu-rs-nm) supports fixed window ratio. However, it doesn't have prebuilts, so you'll have to build it from the source code. See [initial-setup-and-compiling](modders-handbook/initial-setup-and-compiling/ "mention") (don't forget to add the `--release` argument to `cargo build`).
+This feature is already present in one of the development branches, and it's expected to be added to the nightly and stable builds in one of the future releases.
+
+Also this feature is implemented in the [DrGlaucous's fork](https://github.com/DrGlaucous/doukutsu-rs-nm). However, it doesn't have prebuilts, so you'll have to build it from the source code. See [initial-setup-and-compiling](modders-handbook/initial-setup-and-compiling/ "mention") (don't forget to add the `--release` argument to `cargo build`).
 
 ## Platform Support
 
 ### Is controller supported on Android?
 
-Starting April 15, 2026 (version 0.102.0-795), all nightly builds support controllers.
+Support for controllers on Android was added in version 1.0.0.
 
 ### Which platforms is doukutsu-rs available on?
 
@@ -89,11 +91,9 @@ In addition, doukutsu-rs also has an experimental port for Nintendo Switch. Expe
 
 doukutsu-rs is available on the most common platforms, so **there are no plans** to port to other platforms yet.
 
-### Why are there no new builds for Switch?
+Although there are a number of unfinished experimental ports, specifically for iOS and UWP (Xbox), work on them is currently on hold.
 
-The Switch port compilation didn't work for a long time, due to which there were no new builds for this platform. However, the problem has been fixed, but given the experimental status of the port, there are currently no nightly builds for it. A stable build will be published along with a release of a new version of doukutsu-rs.
-
-### The controls on Android are awkward, how do I customise them? How to make the buttons bigger or change their position?
+### The controls on Android are awkward, how do I customize them? How to make the buttons bigger or change their position?
 
 No way. You cannot change the location of touch screen controls and their size. You can only disable their display in `Options` -> `Controls` -> `Display touch controls` -> `OFF`.
 

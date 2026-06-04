@@ -18,12 +18,14 @@ Experimental ports:
 
 **Experimental ports**, on the other hand, typically don't have nightly builds, and their build algorithm may be undocumented or even broken. But the main reason for classifying a port as experimental is its instability.
 
+For example, the Horizon port has release builds for several versions and is located in the `master` branch alongside stable ports. However, it causes hbloader to crash on real hardware from time to time, which is reason to consider it unstable. Furthermore, it's not well maintained, so based on all these factors, it has been labeled as experimental.
+
 Please note that this guide provides instructions for building ports on PC only. So first install Rust and clone the doukutsu-rs repository, as described in [the previous section](./#id-2.-install-rust).
 
 ## Android
 
 {% hint style="info" %}
-Starting 15.04.2026, the Android port has been refactored and moved to the SDL2 backend in order to support controllers. That is why the documentation includes instructions for building the new version of the port (Starting 15.04.2026) and versions that ran with the Glutin backend (0.102.0-beta7 and earlier).
+Starting with version 1.0.0, the Android port has been refactored and moved to the SDL2 backend in order to support controllers. That is why the documentation includes instructions for building the new version of the port (1.0.0 and later) and versions that ran with the Glutin backend (0.102.0-beta7 and earlier).
 {% endhint %}
 
 {% hint style="warning" %}
@@ -64,7 +66,7 @@ Android Studio is the primary IDE for Android applications development, so in th
 To install Android Studio, download it from [the Android Developers portal](https://developer.android.com/studio).
 
 {% tabs %}
-{% tab title="Starting 15.04.2026" %}
+{% tab title="1.0.0 and later" %}
 The **minimum** version required for building doukutsu-rs is **Meerkat Feature Drop | 2024.3.2**.
 {% endtab %}
 
@@ -124,7 +126,7 @@ Launch Android Studio and on the welcome screen, press `"More actions"` and sele
 <figure><img src="../../.gitbook/assets/image.png" alt=""><figcaption><p><code>"Show Package Details"</code> is checked.</p></figcaption></figure>
 
 {% tabs %}
-{% tab title="Starting from 15.04.2026" %}
+{% tab title="1.0.0 and later" %}
 To understand what version of the development kits you need to install, look at the `drsandroid/app/build.gradle.kts` file from the doukutsu-rs directory. In this build config `compileSdkVersion` property stores the API level, that you can use to install the required Platform SDK. `buildToolsVersion` and `ndkVersion` store the exact version of build tools and NDK, required for build. Also install **CMake 3.22+** in the SDK Manager.
 {% endtab %}
 
@@ -134,13 +136,13 @@ To understand what version of the development kits you need to install, look at 
 {% endtabs %}
 
 {% hint style="warning" %}
-Install exactly the development kits version, that are specified in the build config. Otherwise the build can fail.
+Install exactly the development kits version, that are specified in the build config. Otherwise the build may fail.
 {% endhint %}
 
 ### 5. Configuring the project
 
 {% tabs %}
-{% tab title="Starting 15.04.2026" %}
+{% tab title="1.0.0 and later" %}
 Initialize port-specific build dependencies (run this command from the cloned doukutsu-rs directory):
 
 ```
@@ -152,7 +154,7 @@ git submodule update --init --recursive drsandroid
 When all dependencies are installed, we can finally open the project in Android Studio and configure it for building.
 
 {% tabs %}
-{% tab title="Starting 15.04.2026" %}
+{% tab title="1.0.0 and later" %}
 Open Android Studio, click `"Open project"` and select the `drsandroid` directory from the cloned doukutsu-rs repository.
 
 <figure><img src="../../.gitbook/assets/android-open-project.png" alt=""><figcaption><p>Open this exact folder, not the cloned repository itself or anything else.</p></figcaption></figure>
@@ -230,7 +232,7 @@ Resync the project and try to run the build.
 If you lucky enough to not encounter errors or troubles in the previous steps, you can click a hammer on the top panel or press `Ctrl+F9` to build the project.
 
 {% tabs %}
-{% tab title="Starting 15.04.2026" %}
+{% tab title="1.0.0 and later" %}
 The output APK will be in the `drsandroid/app/build/outputs/apk/debug` folder.
 
 By default the debug builds that support only ARMv8 (`arm64`) and x86\_64architecture will be generated. If you want to make a debug build for another architecture, you need to change the architectures list in the `android.buildTypes.debug.ndk` section.
@@ -254,7 +256,7 @@ If you create a keystore in the Android Studio, only the password and the issuer
 When you complete, Android Studio will automatically run the build with specified signing keystore.
 
 {% tabs %}
-{% tab title="Starting 15.04.2026" %}
+{% tab title="1.0.0 and later" %}
 The generated build will be placed in `drsandroid/app/build/outputs/apk/release`.
 {% endtab %}
 
@@ -314,9 +316,9 @@ sudo dnf install python python-distutils-extra ninja-build
 
 We use a patched Rust toolchain to enable the `std` lib support for the Nintendo Switch target.
 
-You can either **(A)** install it from the precompiled archive, or **(B)** compile the toolchain from sources.
+You can either **(A)** install it from the precompiled archive, or **(B)** compile the toolchain from source.
 
-#### A. Installing a precompiled package
+#### A. Installing a precompiled toolchain
 
 Download the latest version of the toolchain from [its repository](https://github.com/doukutsu-rs/rust-hos/releases) and extract the archive to `$HOME/.rustup/toolchains` on Linux.
 
@@ -326,7 +328,7 @@ Enter the `drshorizon` directory in the cloned doukutsu-rs repository and and se
 rustup override set TOOLCHAIN
 ```
 
-#### B. Build from sources
+#### B. Building from source
 
 {% hint style="info" %}
 Building the toolchain will produce ≈20 GiB of build artifacts, which will require a total of ≈30 GiB of free disk space to build the port.
@@ -349,7 +351,7 @@ The build config is also not included in the toolchain, so copy the following co
 
 ```toml
 # Replace "x86_64-unknown-linux-gnu" with the target of your host platform
-# (e.g. "x86_64-pc-windows-msvc" on Windows with MSVC compiler).
+# (e.g. "x86_64-pc-windows-gnu" if you building on Windows using MSYS).
 build.target = ["x86_64-unknown-linux-gnu", "aarch64-nintendo-switch.json"]
 
 build.docs = false
@@ -386,7 +388,7 @@ If the build completed successfully, install the compiled toolchain as `rust-swi
 rustup toolchain link rust-switch build/host/stage1
 ```
 
-Do not remove or move the toolchain folder or `build` folder, because “installing” the custom toolchain literally means creating a symlink to the toolchain folder under some toolchain name. Therefore, if you delete this folder, you will no longer be able to use this toolchain to compile the Horizon port.
+Do not remove or move the toolchain folder or `build` folder, because “installing” the custom toolchain in this case literally means creating a symlink to the toolchain folder under some toolchain name. Therefore, if you delete or move this folder, you will no longer be able to use this toolchain to compile the Horizon port.
 
 {% hint style="info" %}
 If you don't plan to recompile the toolchain later, you can delete all folders in the `build/host` directory except for `stage1` and `stage1-std` folders. It's better to do this after you ensure that the port compiles without errors.
@@ -424,4 +426,3 @@ Table legend:
 |  Portable user directory |    ❌    | ❌<sup>1</sup> |
 
 1. Horizon doesn't have a builtin file manager, and there are no sense to implement a portable user directory for this platform.
-
