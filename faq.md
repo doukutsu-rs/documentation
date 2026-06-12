@@ -33,7 +33,7 @@ Otherwise, the location of the user data depends on the platform:
 * on **Windows**: `%LOCALAPPDATA%\doukutsu-rs\data\` (that is `AppData\Local\doukutsu-rs\data\`)
 * on **macOS**: `~/Library/Application Support/doukutsu-rs/saves`
 * on **Linux**:
-  * if installed from **FlatHub**: `$XDG_DATA_HOME/doukutsu-rs/` (usually this is `$HOME/.var/app/io.github.doukutsu_rs.doukutsu-rs/data/doukutsu-rs/data`)
+  * if installed from **Flathub**: `$XDG_DATA_HOME/doukutsu-rs/` (usually this is `$HOME/.var/app/io.github.doukutsu_rs.doukutsu-rs/data/doukutsu-rs/data`)
   * if you downloaded **the `.elf` executable file**: `$HOME/.local/share/doukutsu-rs/`
 * on **Android**: see [#how-to-open-game-user-data-directory-on-android](faq.md#how-to-open-game-user-data-directory-on-android "mention")
 
@@ -116,7 +116,7 @@ You can do this in two ways.
 If you don't need the English translation, delete the old `data` folder and replace it with the `data` folder from the archive containing the original Japanese version of the game. Place the `Doukutsu.exe` file from the archive next to the `doukutsu-rs` executable, as the engine will extract a number of additional files from it during the first launch.
 
 {% hint style="info" icon="box-open" %}
-If you installed doukutsu-rs from FlatHub and therefore cannot place the `Doukutsu.exe` file next to the `doukutsu-rs` executable, use the `vanilla-extractor` utility, which is included with the application starting from version 1.0.0 (or download it from [its repository](https://github.com/doukutsu-rs/vanilla-extractor/releases/latest)). It works the same way: place its executable file next to the `Doukutsu.exe` file and the `data` folder, run it, and the necessary files will be extracted to the folder. If needed, set the path to the `data` folder in the `VANILLA_OUT_DIR` environment variable.
+If you installed doukutsu-rs from Flathub and therefore cannot place the `Doukutsu.exe` file next to the `doukutsu-rs` executable, use the `vanilla-extractor` utility, which is included with the application starting from version 1.0.0 (or download it from [its repository](https://github.com/doukutsu-rs/vanilla-extractor/releases/latest)). It works the same way: place its executable file next to the `Doukutsu.exe` file and the `data` folder, run it, and the necessary files will be extracted to the folder. If needed, set the path to the `data` folder in the `VANILLA_OUT_DIR` environment variable.
 
 Example of use:
 
