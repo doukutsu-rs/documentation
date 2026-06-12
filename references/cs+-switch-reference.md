@@ -1,5 +1,9 @@
 # CS+KAGE reference
 
+{% hint style="warning" %}
+The information on this page regarding the engine's capabilities may be wildly outdated, and only gets more outdated as the years go by.
+{% endhint %}
+
 doukutsu-rs has partial support for data files and some of the features included with [2017 Switch-exclusive release of Cave Story+](https://www.nicalis.com/games/cavestory+). Due to multiple technical and gameplay changes this page exists to gather all knowledge about it in one place.&#x20;
 
 At time of writing this the reworked release of CS+ has been only released on Nintendo Switch, so if you want to use it with d-rs you need a hacked console to dump the `data` directory from romfs and transfer it to PC.

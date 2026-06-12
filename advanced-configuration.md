@@ -22,6 +22,10 @@ You cannot use environment variables to configure gameplay or visual aspects, bu
 
 This variable specifies the full path to the game data directory. By default, if this variable is missing, the engine searches for game data in the same folder where the engine executable file is located.
 
+{% hint style="info" icon="box-open" %}
+The Flatpak package uses `FORCE_CAVESTORY_DATA_DIR` instead.
+{% endhint %}
+
 ### CAVESTORY\_NO\_OPENGL
 
 **Type**: `boolean`
@@ -29,6 +33,10 @@ This variable specifies the full path to the game data directory. By default, if
 **Possible values**: `1` (true) | `0` (false)
 
 Forces the engine to not use default OpenGL render. This is only supported if the engine is built with the SDL backend (feature `backend-sdl`), for which SDL2 renderer is used, if this option is enabled.
+
+### FORCE\_CAVESTORY\_DATA\_DIR
+
+Alias of `CAVESTORY_DATA_DIR` for the Flatpak package.
 
 ## Command line arguments
 
@@ -52,8 +60,7 @@ Boolean parameters don't accept values and are off by default. String parameters
 
 ### Misc
 
-|       Name      | Value type | Values |                                                                                             Description                                                                                             |
-| :-------------: | :--------: | :----: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-| `--server-mode` |  `boolean` |    -   | <p>Do not create a window and skip audio initialization.</p><p></p><p>It was probably intended for use in online multiplayer, but currenly there's no practical application for this parameter.</p> |
-|     `--help`    |  `boolean` |    -   |                                                             Prints a description of all available CLI parameters and exits the program.                                                             |
-
+|       Name      | Value type | Values |                                                                                          Description                                                                                         |
+| :-------------: | :--------: | :----: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| `--server-mode` |  `boolean` |    -   | <p>Do not create a window and skip audio initialization.</p><p>It was probably intended for use in online multiplayer, but currenly there's no practical application for this parameter.</p> |
+|     `--help`    |  `boolean` |    -   |                                                          Prints a description of all available CLI parameters and exits the program.                                                         |

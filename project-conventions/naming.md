@@ -34,6 +34,6 @@ However, the Flathub package was added with permission and support from the main
 
 ## Contributors
 
-The term _"doukutsu-rs contributors"_ refers to all people who have ever contributed to the engine's codebase. Such people are called contributors.
+The term _"doukutsu-rs contributors"_ refers to all people who have ever contributed to the **engine's codebase**. Such people are called contributors.
 
 A list of contributors who have made meaningful contributions can be found in [a special file](https://github.com/doukutsu-rs/doukutsu-rs/blob/master/AUTHORS.md) in the engine's repository.

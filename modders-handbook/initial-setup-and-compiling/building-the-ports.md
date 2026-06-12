@@ -235,7 +235,7 @@ If you lucky enough to not encounter errors or troubles in the previous steps, y
 {% tab title="1.0.0 and later" %}
 The output APK will be in the `drsandroid/app/build/outputs/apk/debug` folder.
 
-By default the debug builds that support only ARMv8 (`arm64`) and x86\_64architecture will be generated. If you want to make a debug build for another architecture, you need to change the architectures list in the `android.buildTypes.debug.ndk` section.
+By default the debug builds that support only ARMv8 (`arm64-v8a`) and x86-64 architecture will be generated. If you want to make a debug build for another architecture, you need to change the architectures list in the `android.buildTypes.debug.ndk` section.
 {% endtab %}
 
 {% tab title="0.102.0-beta7 and earlier" %}

@@ -33,7 +33,7 @@ Otherwise, the location of the user data depends on the platform:
 * on **Windows**: `%LOCALAPPDATA%\doukutsu-rs\data\` (that is `AppData\Local\doukutsu-rs\data\`)
 * on **macOS**: `~/Library/Application Support/doukutsu-rs/saves`
 * on **Linux**:
-  * if installed from **Flatpak**: `$XDG_DATA_HOME/doukutsu-rs/` (usually this is `$HOME/.var/app/io.github.doukutsu_rs.doukutsu-rs/data/doukutsu-rs/data`)
+  * if installed from **FlatHub**: `$XDG_DATA_HOME/doukutsu-rs/` (usually this is `$HOME/.var/app/io.github.doukutsu_rs.doukutsu-rs/data/doukutsu-rs/data`)
   * if you downloaded **the `.elf` executable file**: `$HOME/.local/share/doukutsu-rs/`
 * on **Android**: see [#how-to-open-game-user-data-directory-on-android](faq.md#how-to-open-game-user-data-directory-on-android "mention")
 
@@ -103,6 +103,39 @@ Although you can try changing the size and position of the buttons in the source
 
 If you're ready for it, in the file [src/input/touch\_controls.rs](https://github.com/doukutsu-rs/doukutsu-rs/blob/2f1159c14f671bb77e845d46b48de9fcfb5eb814/src/input/touch_controls.rs#L100-L146) on line 100-146 you can adjust the location of controls (the first argument of the `add_rect_tinted` function is an X-axis coordinate, and the second argument is a Y-axis coordinate), and in the file [src/input/touch\_player\_controller.rs](https://github.com/doukutsu-rs/doukutsu-rs/blob/2f1159c14f671bb77e845d46b48de9fcfb5eb814/src/input/touch_player_controller.rs#L81-L239) on line 81-239 you can adjust the zones for registering button presses (the zones in which the game will count pressing a particular button).
 
+## Troubleshooting
+
+### Japanese language applies only to the menus/interface, while the game itself (dialogues) remains in English.
+
+This happens because the data files you installed were most likely taken from the English translation of the game. You can fix this by installing the Japanese data files from the original game.
+
+You can do this in two ways.
+
+#### 1. Replace English data files with the Japanese ones
+
+If you don't need the English translation, delete the old `data` folder and replace it with the `data` folder from the archive containing the original Japanese version of the game. Place the `Doukutsu.exe` file from the archive next to the `doukutsu-rs` executable, as the engine will extract a number of additional files from it during the first launch.
+
+{% hint style="info" icon="box-open" %}
+If you installed doukutsu-rs from FlatHub and therefore cannot place the `Doukutsu.exe` file next to the `doukutsu-rs` executable, use the `vanilla-extractor` utility, which is included with the application starting from version 1.0.0 (or download it from [its repository](https://github.com/doukutsu-rs/vanilla-extractor/releases/latest)). It works the same way: place its executable file next to the `Doukutsu.exe` file and the `data` folder, run it, and the necessary files will be extracted to the folder. If needed, set the path to the `data` folder in the `VANILLA_OUT_DIR` environment variable.
+
+Example of use:
+
+```shellscript
+cd "path to the dir where Doukutsu.exe is located"
+VANILLA_OUT_DIR="path to the data dir" vanilla-extractor.elf
+```
+{% endhint %}
+
+However, in the settings, Japanese will be displayed as a language with missing data files, even though this is not the case. This is due to how the engine handles translations: by default, it considers that the files in the `data` folder are in English. Since you replaced the English translation data files with Japanese ones, it considers the Japanese data files are missing.
+
+#### 2. Add Japanese data files as alternative
+
+If you want to keep the English translation, repeat the steps described in the first option, but instead of deleting the `data` folder containing the English translation, rename it (the new name doesn't matter). Then run doukutsu-rs so that the application can extract the necessary files. After that, rename the `data` folder containing the Japanese game files to `jp`. Rename the folder with the English translation data back to `data`, and place the `jp` folder inside it. After that, when you change the language in the settings, the in-game dialogs should be in the language you selected.
+
+***
+
+There will probably be an easier way to do this in the future, but for now, this is how it's done.
+
 ## Game Info
 
 ### What are the differences between the difficulty levels?
@@ -110,12 +143,20 @@ If you're ready for it, in the file [src/input/touch\_controls.rs](https://githu
 * Easy - damage dealt by enemies is halved.
 * Hard - no life capsules and missile launcher.
 
+Also on difficutly level other than Normal, Quote (the player) will have a corresponding skin if CS+ data files are used.
+
 ### How to activate seasonal textures?
 
 They're used automatically if `Graphics -> Seasonal textures` option is enabled and the appropriate date has arrived.
 
 * Christmas textures are active from December 24 through January 6.
 * Halloween textures are active from October 26 through November 2.
+
+### How to change the character's skin?
+
+You **cannot** select a skin for Player 1.
+
+When CS+ game data is used, Player 1's skin changes auomatically during seasonal events (see [#how-to-activate-seasonal-textures](faq.md#how-to-activate-seasonal-textures "mention")) and when playing on a difficulty level other than Normal. These data files also allow you to select a skin for Player 2.
 
 ***
 
