@@ -8,6 +8,8 @@ Here's a breakdown of the supported versions and where to get them:
 
 **Recommended Version: Steam**
 
+{% include "../../.gitbook/includes/on-june-9-2026-an-update-....md" %}
+
 * **Link:** [https://store.steampowered.com/app/200900/Cave\_Story/](https://store.steampowered.com/app/200900/Cave_Story/)
 * **Why it's recommended:** The Steam version is generally the most well-maintained and feature-complete version of the 2011 PC release. It includes extras like achievements and cloud saves (though note that Steam Achievements are _not_ directly supported by doukutsu-rs). If you're buying Cave Story+ for the first time, this is the version we recommend.
 

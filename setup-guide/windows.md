@@ -27,6 +27,8 @@ Setting up doukutsu-rs on your Windows PC is straightforward - just follow those
 
 ### 4. Add Game Data
 
+{% include "../.gitbook/includes/on-june-9-2026-an-update-....md" %}
+
 * You will need to add the Cave Story game data files to the same folder. These files are contained within a folder named "**data**". If you have played Cave Story previously, you should already have this folder.
 * **For Freeware Cave Story Users:** If you are using the original freeware version of Cave Story, also place the original game executable, "**Doukutsu.exe**", into the doukutsu-rs folder alongside the "data" folder and the `doukutsu-rs.{version}.exe` file.
 * This file in original **freeware** version stores some necessary data files, such as credits sequence sprites, background music and map list - it must be present at least during first run - it can be deleted after first successful launch. This is not applicable to **Cave Story+**, as all required data is present in the **"data"** folder.
