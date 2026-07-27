@@ -269,11 +269,17 @@ The generated build will be placed in `app/app/build/outputs/apk/release`.
 
 {% include "../../.gitbook/includes/untitled.md" %}
 
-{% hint style="info" %}
+{% hint style="info" icon="circle-info" %}
 Although the Horizon port can _**probably**_ be compiled on 64-bit Windows using MSYS2, the build process has only been tested on x86-64 (AMD64) Linux system, so compilation on other platforms and architectures is not guaranteed, and isn't covered in this guide.
 {% endhint %}
 
 ### 1. Install dependencies
+
+{% hint style="info" icon="docker" %}
+Starting 22.07.2026, the Horizon port can be compiled inside the Docker container, which prevents cluttering the system with toolchains and packages needed only for building this port and significantly simplifies the build process.
+
+If you are going to build the port using Docker, install it ([installation guide](https://docs.docker.com/engine/install/)) and proceed directly to step 3 of this guide ([#id-3.-build-doukutsu-rs](building-the-ports.md#id-3.-build-doukutsu-rs "mention")).
+{% endhint %}
 
 Build process of the Horizon port depends primarily on the Switch homebrew toolchain provided by devkitPro. It uses the `uam` utility to compile shaders, `deko3d` as a graphics API, and many other tools to compile and package doukutsu-rs in the format that can be run on Switch.
 
@@ -285,36 +291,43 @@ After installing `pacman` (or `dkp-pacman`), install the Switch development kit:
 sudo pacman -Sy switch-dev
 ```
 
-Don't forget to set environment variables containing the path to the development kit installation folder:
+Don't forget to set the devkitPro environment variables:
 
 ```
-export DEVKITPRO=/opt/devkitpro
-export DEVKITARM=/opt/devkitpro/devkitARM
+source /etc/profile.d/devkitpro-env.sh
 ```
 
-You also need the same development dependencies, as for the building the Linux port on a Linux system ([#id-1.-install-the-development-dependencies](./#id-1.-install-the-development-dependencies "mention")), along with a few additional dependencies:
+***
+
+Install the same development dependencies, as for the building the Linux port on a Linux system ([#id-1.-install-the-development-dependencies](./#id-1.-install-the-development-dependencies "mention")), along with a few additional dependencies:
 
 #### Arch-based distributions (Arch Linux, Manjaro, EndeavourOS, etc.)
 
 ```
-sudo pacman -Sy python python-distutils-extra ninja
+sudo pacman -S clang
 ```
 
 #### Debian-based distributions (Debian, Ubuntu, Linux Mint, Pop!\_OS, etc.)
 
 ```
-sudo apt install python3 python3-distutils-extra ninja-build
+sudo apt install clang libclang-dev
 ```
 
 #### Red Hat-based distributions (CentOS, Fedora, etc.)
 
 ```
-sudo dnf install python python-distutils-extra ninja-build
+sudo dnf install clang
 ```
 
 ### 2. Install Rust toolchain
 
-We use a patched Rust toolchain to enable the `std` lib support for the Nintendo Switch target.
+First, install the Rust Nightly toolchain:
+
+```
+rustup toolchain install nightly
+```
+
+We also use a patched Rust toolchain to enable the `std` lib support for the Nintendo Switch target.
 
 You can either **(A)** install it from the precompiled archive, or **(B)** compile the toolchain from source.
 
@@ -334,7 +347,31 @@ rustup override set TOOLCHAIN
 Building the toolchain will produce ≈20 GiB of build artifacts, which will require a total of ≈30 GiB of free disk space to build the port.
 {% endhint %}
 
-Clone this toolchain (if you need to access the commit history, remove the `--depth 1` flag):
+***
+
+Install the following packages required to build the toolchain:
+
+#### Arch-based distributions (Arch Linux, Manjaro, EndeavourOS, etc.)
+
+```
+sudo pacman -Sy python python-distutils-extra ninja
+```
+
+#### Debian-based distributions (Debian, Ubuntu, Linux Mint, Pop!\_OS, etc.)
+
+```
+sudo apt install python3 python3-distutils-extra ninja-build
+```
+
+#### Red Hat-based distributions (CentOS, Fedora, etc.)
+
+```
+sudo dnf install python python-distutils-extra ninja-build
+```
+
+***
+
+Clone this toolchain (if you need to access the full commit history, remove the `--depth 1` flag):
 
 ```
 git clone --depth 1 https://github.com/doukutsu-rs/rust-hos.git
@@ -371,15 +408,23 @@ rust.download-rustc = false
 
 [llvm]
 download-ci-llvm = false
-targets = "AArch64;ARM;X86"
+targets = "AArch64;X86"
 experimental-targets = ""
 polly = true
+
+[target.aarch64-nintendo-switch]
+cc = "/opt/devkitpro/devkitA64/bin/aarch64-none-elf-gcc"
+cxx = "/opt/devkitpro/devkitA64/bin/aarch64-none-elf-g++"
+ar = "/opt/devkitpro/devkitA64/bin/aarch64-none-elf-ar"
+ranlib = "/opt/devkitpro/devkitA64/bin/aarch64-none-elf-ranlib"
+linker = "/opt/devkitpro/devkitA64/bin/aarch64-none-elf-gcc"
+no-std = false
 ```
 
 Now you can build the toolchain:
 
 ```
-./x build --stage 1
+./x build
 ```
 
 If the build completed successfully, install the compiled toolchain as `rust-switch`:
@@ -404,13 +449,39 @@ rustup override set rust-switch
 
 Enter the `drshorizon` directory in the cloned doukutsu-rs repository and run the build script:
 
+{% tabs %}
+{% tab title="Starting 22.07.2026" %}
+```
+./build.sh
+```
+
+If you want to compile a release (optimized) build, run:
+
+```
+./build.sh -r
+```
+
+To build a Docker container image and run the build proccess inside it, add the `--docker` flag to any of the commands above.
+
+***
+
+If want to pass some arguments to Cargo (e.g. `-j` or `-vv`), pass them to the build script:
+
+```
+./build.sh -j3 -vv
+```
+{% endtab %}
+
+{% tab title="Before 22.07.2026" %}
 ```
 ./build_debug.sh
 ```
 
-Output file `drshorizon.nro` will be placed in the `target/aarch64-nintendo-switch/debug` folder.
+If you want to compile a release (optimized) build, run the `build_release.sh` script.
+{% endtab %}
+{% endtabs %}
 
-If you want to compile a release (optimized) build, run the `build_release.sh` script. The output file will be located in the `target/aarch64-nintendo-switch/release` folder.
+The output file `drshorizon.nro` will be placed in the `target/aarch64-nintendo-switch/debug` or  `target/aarch64-nintendo-switch/release` folder respectively.
 
 ## Port feature completeness
 
