@@ -371,3 +371,19 @@ To run the project, just run the following command:
 ```
 ./target/debug/doukutsu-rs
 ```
+
+### 5. Build an app bundle (optional)
+
+If you want a proper `doukutsu-rs.app` like the official releases, you will need a full installation of Xcode 26 or newer from the App Store (the Command Line Tools alone are not enough, as the app icon is compiled with Xcode's `actool`) and `cargo-bundle`:
+
+```
+cargo install cargo-bundle
+```
+
+Then run the build script from the root of the repository:
+
+```
+./misc/build-macos.sh
+```
+
+This builds the project in release mode, packages it into an app bundle, compiles the app icon and signs the bundle. Once it's done, the script prints the location of the bundle, by default `target/release/bundle/osx/doukutsu-rs.app`. To build for a specific architecture, pass the target as an argument, e.g. `./misc/build-macos.sh aarch64-apple-darwin` or `./misc/build-macos.sh x86_64-apple-darwin`.
